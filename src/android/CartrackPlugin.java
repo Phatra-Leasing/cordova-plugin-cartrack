@@ -243,6 +243,13 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
 
     }
 
+     @Override
+    //TODO? (add at version 3.0.2)
+    public void onReconnect() {
+
+    }
+    
+
     @Override
     public void onTerminalCommandResult(BleAction bleAction) {
         CallbackContext callbackContext = CallbackContextList.get(CallbackTypes.SEND_ACTION);
