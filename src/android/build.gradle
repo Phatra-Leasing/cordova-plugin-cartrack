@@ -7,7 +7,6 @@ allprojects {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.aar'], dir: 'libs')
     implementation(name: 'blesdk-release_v3.0.2', ext: 'aar')
       //old one
       //implementation fileTree(include: ['*.aar'], dir: 'libs')
