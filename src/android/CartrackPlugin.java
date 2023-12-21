@@ -239,7 +239,7 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
 
     @Override
     //TODO?
-    public void onSignalStrength(BleSignalStrength bleSignalStrength) {
+    public void onSignalStrength(BleSignalStrength bleSignalStrength, int i) {
 
     }
 
