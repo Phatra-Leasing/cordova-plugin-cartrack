@@ -38,7 +38,7 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
     protected static String[] permissions = {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.BLUETOOTH,
+            //Manifest.permission.BLUETOOTH, (remove on 4/1/2024 for android 12+
     };
 
     enum CallbackTypes {
@@ -168,8 +168,8 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
 
             if (permissions.length <= 3) { // Only add the permissions if we do not added before
                 permissions = Arrays.copyOf(permissions, (permissions.length + additionalPermissions.length));
-                permissions[3] = additionalPermissions[0];
-                permissions[4] = additionalPermissions[1];
+                permissions[2] = additionalPermissions[0];
+                permissions[3] = additionalPermissions[1];
             }
         }
 
