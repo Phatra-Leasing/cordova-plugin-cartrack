@@ -166,7 +166,7 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
                     Manifest.permission.BLUETOOTH_SCAN
             };
 
-            if (permissions.length <= 3) { // Only add the permissions if we do not added before
+            if (permissions.length <= 2) { // Only add the permissions if we do not added before
                 permissions = Arrays.copyOf(permissions, (permissions.length + additionalPermissions.length));
                 permissions[2] = additionalPermissions[0];
                 permissions[3] = additionalPermissions[1];
