@@ -43,11 +43,29 @@ class CartrackPlugin: CDVPlugin {
         }
     }
     
-    @objc (scanAndConnectToPeripheral:)
+    @objc(scanAndConnectToPeripheral:)
     func scanAndConnectToPeripheral(_ command: CDVInvokedUrlCommand) {
         callbackCommandDict = [.scanAndConnect: command]
-            print("Connecting...")
-            bleTerminal?.connect()
+        print("Connecting...")
+        bleTerminal?.connect()
+        // Define a timeout interval (e.g., 5 seconds)
+        let timeoutInterval: TimeInterval = 5.0
+    
+        // Start a timeout block that will be executed if the connection is not established
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeoutInterval) { [weak self] in
+            guard let self = self else { return }
+            // Check if the connection is still not established
+            if self.bleTerminal?.isConnected == false {
+                print("Connection attempt timed out.")
+
+                //// Optionally, disconnect if needed
+                //self.bleTerminal?.disconnect()
+
+                // Send a timeout error response back to the command delegate
+                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Connection timed out")
+                self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
+            }
+        }
     }
     
     @objc (disconnect:)
@@ -55,6 +73,25 @@ class CartrackPlugin: CDVPlugin {
         callbackCommandDict = [.disconnect:command]
         print("Disconnecting...")
         bleTerminal?.disconnect()
+
+        // Define a timeout interval (e.g., 1 seconds)
+        let timeoutInterval: TimeInterval = 1.0
+    
+        // Start a timeout block that will be executed if the connection is not established
+        DispatchQueue.main.asyncAfter(deadline: .now() + timeoutInterval) { [weak self] in
+            guard let self = self else { return }
+            // Check if the connection is still not established
+            if self.bleTerminal?.isConnected == true {
+                print("Disconnection attempt timed out.")
+                
+                //// Optionally, disconnect if needed
+                //self.bleTerminal?.disconnect()
+
+                // Send a timeout error response back to the command delegate
+                let pluginResult = CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Disconnection timed out")
+                self.commandDelegate.send(pluginResult, callbackId: command.callbackId)
+            }
+        }
     }
     
     @objc (removeAuthKey:)
