@@ -47,9 +47,6 @@ class CartrackPlugin: CDVPlugin {
     func scanAndConnectToPeripheral(_ command: CDVInvokedUrlCommand) {
         callbackCommandDict = [.scanAndConnect: command]
         print("Connecting...")
-        //26/09/2024 by boom 
-        // เอาบรรทัดนี้ออก bleTerminal?.connect()
-        // เติมท่อนล่างแทน
         if(bleTerminal?.connectionState = CartrackBleLockSDK.BleConnectionState.disconnected) {
             bleTerminal?.connect()
         } else {
@@ -64,9 +61,6 @@ class CartrackPlugin: CDVPlugin {
     func disconnect(_ command: CDVInvokedUrlCommand) {
         callbackCommandDict = [.disconnect:command]
         print("Disconnecting...")        
-        //26/09/2024 by boom 
-        // เอาบรรทัดนี้ออก bleTerminal?.disconnect()
-        // เติมท่อนล่างแทน
         if(bleTerminal?.connectionState = CartrackBleLockSDK.BleConnectionState.connected) {
             bleTerminal?.disconnect()
         } else {
