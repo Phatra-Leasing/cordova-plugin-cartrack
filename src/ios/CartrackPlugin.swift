@@ -70,8 +70,8 @@ class CartrackPlugin: CDVPlugin {
         if(bleTerminal?.connectionState = CartrackBleLockSDK.BleConnectionState.connected) {
             bleTerminal?.disconnect()
         } else {
-            if let command = callbackCommandDict[.scanAndConnect]{
-                callbackCommandDict.removeValue(forKey: .scanAndConnect)
+            if let command = callbackCommandDict[.disconnect]{
+                callbackCommandDict.removeValue(forKey: .disconnect)
                 sendPluginResult(cdvCommand: command,status: CDVCommandStatus_OK, message: "Disconnected")
             }
         }
