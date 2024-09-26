@@ -134,7 +134,7 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
     private void disconnect(CallbackContext callbackContext){
         if (BleService.Companion.isConfigured()) {
             if (BleTerminal.getBleConnectionState() == BleConnectionState.CONNECTED) {
-                CallbackContextList.put(CallbackTypes.DISCONNECT, callbackContext);
+                CallbackContextList.put(CallbackTypes.DISCONNECT , callbackContext);
                 BleTerminal.disconnect();
             } else {
                 callbackContext.error("Already Disconnected BLE terminal");
