@@ -120,10 +120,6 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
 
     private void scanAndConnectToPeripheral(long timeoutSeconds, CallbackContext callbackContext){
         if (BleService.Companion.isConfigured()) {
-            //26/09/2024 by boom
-            // เอาบรรทัดนี้ออก CallbackContextList.put(CallbackTypes.SCAN_AND_CONNECT_TO_PERIPHERAL, callbackContext);
-            // เอาบรรทัดนี้ออก BleTerminal.scanAndConnectToPeripheral(timeoutSeconds * 1000);
-            // แล้วเติมส่วนนี้แทน
             if (BleTerminal.getBleConnectionState() == BleConnectionState.DISCONNECTED) {
                 CallbackContextList.put(CallbackTypes.SCAN_AND_CONNECT_TO_PERIPHERAL, callbackContext);
                 BleTerminal.scanAndConnectToPeripheral(timeoutSeconds * 1000);
@@ -137,10 +133,6 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
 
     private void disconnect(CallbackContext callbackContext){
         if (BleService.Companion.isConfigured()) {
-            //26/09/2024 by boom
-            // เอาบรรทัดนี้ออก CallbackContextList.put(CallbackTypes.DISCONNECT, callbackContext);
-            // เอาบรรทัดนี้ออก BleTerminal.disconnect();
-            // แล้วเติมส่วนนี้แทน
             if (BleTerminal.getBleConnectionState() == BleConnectionState.CONNECTED) {
                 CallbackContextList.put(CallbackTypes.DISCONNECT, callbackContext);
                 BleTerminal.disconnect();
