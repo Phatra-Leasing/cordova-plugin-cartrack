@@ -118,11 +118,6 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
     }
 
     private void scanAndConnectToPeripheral(long timeoutSeconds, CallbackContext callbackContext){
-
-        if (timeoutSeconds == null) {
-        timeoutSeconds = 5; // Default value
-        }
-
         if (BleService.Companion.isConfigured()) {
             CallbackContextList.put(CallbackTypes.SCAN_AND_CONNECT_TO_PERIPHERAL, callbackContext);
             BleTerminal.scanAndConnectToPeripheral(timeoutSeconds * 1000);
@@ -131,15 +126,10 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
         }
     }
 
-    private void disconnect(long timeoutSeconds, CallbackContext callbackContext){
-        
-        if (timeoutSeconds == null) {
-        timeoutSeconds = 1; // Default value
-        }
-
+    private void disconnect(CallbackContext callbackContext){
         if (BleService.Companion.isConfigured()) {
             CallbackContextList.put(CallbackTypes.DISCONNECT, callbackContext);
-            BleTerminal.disconnect(timeoutSeconds * 1000);
+            BleTerminal.disconnect();
         } else {
             callbackContext.error("Please configure BLE terminal");
         }
