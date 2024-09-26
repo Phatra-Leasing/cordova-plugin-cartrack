@@ -141,7 +141,7 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
             // เอาบรรทัดนี้ออก CallbackContextList.put(CallbackTypes.DISCONNECT, callbackContext);
             // เอาบรรทัดนี้ออก BleTerminal.disconnect();
             // แล้วเติมส่วนนี้แทน
-            if (BleTerminal.getBleConnectionState() == BleConnectionState.Connected) {
+            if (BleTerminal.getBleConnectionState() == BleConnectionState.CONNECTED) {
                 CallbackContextList.put(CallbackTypes.DISCONNECT, callbackContext);
                 BleTerminal.disconnect();
             } else {

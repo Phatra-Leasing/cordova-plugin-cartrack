@@ -63,12 +63,11 @@ class CartrackPlugin: CDVPlugin {
     @objc (disconnect:)
     func disconnect(_ command: CDVInvokedUrlCommand) {
         callbackCommandDict = [.disconnect:command]
-        print("Disconnecting...")
-        
+        print("Disconnecting...")        
         //26/09/2024 by boom 
         // เอาบรรทัดนี้ออก bleTerminal?.disconnect()
         // เติมท่อนล่างแทน
-        if(bleTerminal?.connectionState = CartrackBleLockSDK.BleConnectionState.Connected) {
+        if(bleTerminal?.connectionState = CartrackBleLockSDK.BleConnectionState.connected) {
             bleTerminal?.disconnect()
         } else {
             if let command = callbackCommandDict[.scanAndConnect]{
