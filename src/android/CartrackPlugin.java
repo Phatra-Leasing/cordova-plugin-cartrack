@@ -12,6 +12,7 @@ import com.cartrack.blesdk.enumerations.BleError;
 import com.cartrack.blesdk.enumerations.BleSignalStrength;
 import com.cartrack.blesdk.enumerations.GetVehicleStats;
 import com.cartrack.blesdk.enumerations.GetVehicleStatus;
+import com.cartrack.blesdk.enumerations.BleConnectionState;  // 26/09/2024 by boom
 import com.google.gson.Gson;
 
 import org.apache.cordova.CordovaPlugin;
@@ -119,8 +120,16 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
 
     private void scanAndConnectToPeripheral(long timeoutSeconds, CallbackContext callbackContext){
         if (BleService.Companion.isConfigured()) {
-            CallbackContextList.put(CallbackTypes.SCAN_AND_CONNECT_TO_PERIPHERAL, callbackContext);
-            BleTerminal.scanAndConnectToPeripheral(timeoutSeconds * 1000);
+            //26/09/2024 by boom
+            // เอาบรรทัดนี้ออก CallbackContextList.put(CallbackTypes.SCAN_AND_CONNECT_TO_PERIPHERAL, callbackContext);
+            // เอาบรรทัดนี้ออก BleTerminal.scanAndConnectToPeripheral(timeoutSeconds * 1000);
+            // แล้วเติมส่วนนี้แทน
+            if (BleTerminal.getBleConnectionState() == BleConnectionState.DISCONNECTED) {
+                CallbackContextList.put(CallbackTypes.SCAN_AND_CONNECT_TO_PERIPHERAL, callbackContext);
+                BleTerminal.scanAndConnectToPeripheral(timeoutSeconds * 1000);
+            } else {
+                callbackContext.error("Already Connected BLE terminal");
+            }
         } else {
             callbackContext.error("Please configure BLE terminal");
         }
@@ -128,8 +137,16 @@ public class CartrackPlugin extends CordovaPlugin implements BleListener {
 
     private void disconnect(CallbackContext callbackContext){
         if (BleService.Companion.isConfigured()) {
-            CallbackContextList.put(CallbackTypes.DISCONNECT, callbackContext);
-            BleTerminal.disconnect();
+            //26/09/2024 by boom
+            // เอาบรรทัดนี้ออก CallbackContextList.put(CallbackTypes.DISCONNECT, callbackContext);
+            // เอาบรรทัดนี้ออก BleTerminal.disconnect();
+            // แล้วเติมส่วนนี้แทน
+            if (BleTerminal.getBleConnectionState() == BleConnectionState.Connected) {
+                CallbackContextList.put(CallbackTypes.DISCONNECT, callbackContext);
+                BleTerminal.disconnect();
+            } else {
+                callbackContext.error("Already Disconnected BLE terminal");
+            }
         } else {
             callbackContext.error("Please configure BLE terminal");
         }
