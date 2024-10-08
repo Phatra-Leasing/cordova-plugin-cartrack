@@ -46,15 +46,29 @@ class CartrackPlugin: CDVPlugin {
     @objc (scanAndConnectToPeripheral:)
     func scanAndConnectToPeripheral(_ command: CDVInvokedUrlCommand) {
         callbackCommandDict = [.scanAndConnect: command]
-            print("Connecting...")
+        print("Connecting...")
+        if(bleTerminal?.connectionState == CartrackBleLockSDK.BleConnectionState.disconnected) {
             bleTerminal?.connect()
+        } else {
+            if let command = callbackCommandDict[.scanAndConnect]{
+                callbackCommandDict.removeValue(forKey: .scanAndConnect)
+                sendPluginResult(cdvCommand: command,status: CDVCommandStatus_OK, message: "Connected")
+            }
+        }
     }
     
     @objc (disconnect:)
     func disconnect(_ command: CDVInvokedUrlCommand) {
         callbackCommandDict = [.disconnect:command]
-        print("Disconnecting...")
-        bleTerminal?.disconnect()
+        print("Disconnecting...")        
+        if(bleTerminal?.connectionState == CartrackBleLockSDK.BleConnectionState.connected) {
+            bleTerminal?.disconnect()
+        } else {
+            if let command = callbackCommandDict[.disconnect]{
+                callbackCommandDict.removeValue(forKey: .disconnect)
+                sendPluginResult(cdvCommand: command,status: CDVCommandStatus_OK, message: "Disconnected")
+            }
+        }
     }
     
     @objc (removeAuthKey:)
